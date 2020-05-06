@@ -9,7 +9,7 @@ from PyQt5 import QtWidgets
 import gmpgs_gui
 
 def isOutputCif(cifPath):
-    """Функция смотрит cif файл на предмет наличия определенных строк"""
+    """Check file for conatining magic string"""
     with open(cifPath,"r") as f:
         for line in f:
             if '# On the following loop you will have:' in line:
@@ -17,7 +17,7 @@ def isOutputCif(cifPath):
         return False
 
 def processLst(lstPath):
-    """Сия процедура читает lst-файл и возвращает вложенный список пиков для каждой фазы. Число вложенных списков - число фаз в файле"""
+    """Read lst-file and return list of ticks"""
     isReflectionList = False
     peaks = []
     local_peaks = []
@@ -39,7 +39,7 @@ def processLst(lstPath):
         return peaks
 
 def processCif(cifPath):
-    """Сия процедура возвращает вложенный список точки-значения"""
+    """Return list of points angle-intensity"""
     points = []
     with open(cifPath,"r") as f:
         isList = False
@@ -60,7 +60,7 @@ def processCif(cifPath):
         return points
 
 def writeOutFiles(peaks, points, lstDirPath, prefix):
-    # Определим максимальные значения, нужные для масштабирования
+    # Define maximum values of difference and intesity values
     maxdif = float(points[0][1])-float(points[0][2])
     maxval = float(points[0][1])
     for p in points:
@@ -70,7 +70,7 @@ def writeOutFiles(peaks, points, lstDirPath, prefix):
         if float(p[1]) > maxval:
             maxval = float(p[1])
     #Scale ticks step proportional to maximal instensity and calculate shift
-    tick_step = maxval / 40;
+    tick_step = maxval / 40
     diff_shift = maxdif + tick_step*(len(peaks)+1)
     
     with open(os.path.join(lstDirPath, prefix + "_points.dat"),"w") as f:
@@ -89,7 +89,7 @@ class gmpgs_guiApp(QtWidgets.QMainWindow, gmpgs_gui.Ui_MainWindow):
     def __init__(self):
         super().__init__()
         self.setupUi(self)
-        # Подписываемся на события кнопок
+        # Connect to buttons
         self.addFolderButton.clicked.connect(self.addFolder)
         self.delFolderButton.clicked.connect(self.remFolder)
         self.procButton.clicked.connect(self.startProcessing)
@@ -113,13 +113,13 @@ class gmpgs_guiApp(QtWidgets.QMainWindow, gmpgs_gui.Ui_MainWindow):
     def startProcessing(self):
         self.textEdit.clear()
         for i in range(self.listWidget.count()):
-            #Начинаем обход по заданным папкам, вычленяя необходимые файлы
+            #Process folders
             path = self.listWidget.item(i).text()
             par_lst_path = ""
             cif_path = ""
             prefix = ""
             self.textEdit.append("===========================\nFolder #" + str(i+1) + " ::\n" + path)
-            #В директории надо искать соответствующие файлы
+            #Search par.lst and cif files
             for dir_item in os.scandir(path):
                 if dir_item.is_file() and ".par.lst" in dir_item.name:
                     par_lst_path = dir_item.path
@@ -132,18 +132,18 @@ class gmpgs_guiApp(QtWidgets.QMainWindow, gmpgs_gui.Ui_MainWindow):
             if par_lst_path == "" or cif_path == "":
                 self.textEdit.append("One or more files not found in this folder... Skip folder.")
                 continue
-            #Сперва нужно обработать lst-файл, получить количество фаз и пики, им соответствующие
+            #Gettings phases count and ticks in lst file
             self.textEdit.append(".par.lst processing...")
             peaks = processLst(par_lst_path)
             self.textEdit.append(str(len(peaks)) + " phases")
-            # Обработка CIF-файла
+            #Process cif file
             self.textEdit.append(".cif processing...")
             points = processCif(cif_path)
             self.textEdit.append(str(len(points)) + " points read")
 
             writeOutFiles(peaks,points,path,prefix)
 
-            #Можно накидать по шалблону файл для gnuplot'a
+            #Generate gnuplot files (on russian by defalut)
             template_filename = "ru_gtemplate"
             plot_filename = os.path.join(path, prefix + "_plot.plt")
             with open(template_filename,"r",encoding="koi8-r") as tpl_f, open(plot_filename,"w",encoding="koi8-r") as plot_f:
