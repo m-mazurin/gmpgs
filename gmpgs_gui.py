@@ -1,0 +1,90 @@
+# -*- coding: utf-8 -*-
+
+# Form implementation generated from reading ui file 'gmpgs_gui.ui'
+#
+# Created by: PyQt5 UI code generator 5.10.1
+#
+# WARNING! All changes made in this file will be lost!
+
+from PyQt5 import QtCore, QtGui, QtWidgets
+
+class Ui_MainWindow(object):
+    def setupUi(self, MainWindow):
+        MainWindow.setObjectName("MainWindow")
+        MainWindow.resize(492, 364)
+        MainWindow.setToolButtonStyle(QtCore.Qt.ToolButtonIconOnly)
+        self.centralwidget = QtWidgets.QWidget(MainWindow)
+        self.centralwidget.setObjectName("centralwidget")
+        self.verticalLayout = QtWidgets.QVBoxLayout(self.centralwidget)
+        self.verticalLayout.setObjectName("verticalLayout")
+        self.label = QtWidgets.QLabel(self.centralwidget)
+        self.label.setAlignment(QtCore.Qt.AlignCenter)
+        self.label.setObjectName("label")
+        self.verticalLayout.addWidget(self.label)
+        self.listWidget = QtWidgets.QListWidget(self.centralwidget)
+        self.listWidget.setViewMode(QtWidgets.QListView.ListMode)
+        self.listWidget.setSelectionRectVisible(True)
+        self.listWidget.setObjectName("listWidget")
+        self.verticalLayout.addWidget(self.listWidget)
+        self.horizontalLayout = QtWidgets.QHBoxLayout()
+        self.horizontalLayout.setObjectName("horizontalLayout")
+        self.addFolderButton = QtWidgets.QPushButton(self.centralwidget)
+        icon = QtGui.QIcon()
+        icon.addPixmap(QtGui.QPixmap("icons/066-plus.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        self.addFolderButton.setIcon(icon)
+        self.addFolderButton.setObjectName("addFolderButton")
+        self.horizontalLayout.addWidget(self.addFolderButton)
+        self.delFolderButton = QtWidgets.QPushButton(self.centralwidget)
+        icon1 = QtGui.QIcon()
+        icon1.addPixmap(QtGui.QPixmap("icons/026-delete.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        self.delFolderButton.setIcon(icon1)
+        self.delFolderButton.setObjectName("delFolderButton")
+        self.horizontalLayout.addWidget(self.delFolderButton)
+        self.procButton = QtWidgets.QPushButton(self.centralwidget)
+        icon2 = QtGui.QIcon()
+        icon2.addPixmap(QtGui.QPixmap("icons/091-warning.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        self.procButton.setIcon(icon2)
+        self.procButton.setObjectName("procButton")
+        self.horizontalLayout.addWidget(self.procButton)
+        self.verticalLayout.addLayout(self.horizontalLayout)
+        self.label_2 = QtWidgets.QLabel(self.centralwidget)
+        self.label_2.setAlignment(QtCore.Qt.AlignCenter)
+        self.label_2.setObjectName("label_2")
+        self.verticalLayout.addWidget(self.label_2)
+        self.textEdit = QtWidgets.QTextEdit(self.centralwidget)
+        self.textEdit.setReadOnly(True)
+        self.textEdit.setObjectName("textEdit")
+        self.verticalLayout.addWidget(self.textEdit)
+        MainWindow.setCentralWidget(self.centralwidget)
+        self.menubar = QtWidgets.QMenuBar(MainWindow)
+        self.menubar.setGeometry(QtCore.QRect(0, 0, 492, 22))
+        self.menubar.setObjectName("menubar")
+        self.menuHelp = QtWidgets.QMenu(self.menubar)
+        self.menuHelp.setObjectName("menuHelp")
+        MainWindow.setMenuBar(self.menubar)
+        self.actionHow_to = QtWidgets.QAction(MainWindow)
+        self.actionHow_to.setObjectName("actionHow_to")
+        self.actionAbout = QtWidgets.QAction(MainWindow)
+        icon3 = QtGui.QIcon()
+        icon3.addPixmap(QtGui.QPixmap("icons/073-question.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        self.actionAbout.setIcon(icon3)
+        self.actionAbout.setObjectName("actionAbout")
+        self.menuHelp.addAction(self.actionHow_to)
+        self.menuHelp.addAction(self.actionAbout)
+        self.menubar.addAction(self.menuHelp.menuAction())
+
+        self.retranslateUi(MainWindow)
+        QtCore.QMetaObject.connectSlotsByName(MainWindow)
+
+    def retranslateUi(self, MainWindow):
+        _translate = QtCore.QCoreApplication.translate
+        MainWindow.setWindowTitle(_translate("MainWindow", "MAUD Plot Generating Tool v.1.0"))
+        self.label.setText(_translate("MainWindow", "Folders"))
+        self.addFolderButton.setText(_translate("MainWindow", "Add folder..."))
+        self.delFolderButton.setText(_translate("MainWindow", "Remove folder"))
+        self.procButton.setText(_translate("MainWindow", "Process..."))
+        self.label_2.setText(_translate("MainWindow", "Output"))
+        self.menuHelp.setTitle(_translate("MainWindow", "Help"))
+        self.actionHow_to.setText(_translate("MainWindow", "How to?"))
+        self.actionAbout.setText(_translate("MainWindow", "About"))
+
