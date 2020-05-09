@@ -144,9 +144,11 @@ class gmpgs_guiApp(QtWidgets.QMainWindow, gmpgs_gui.Ui_MainWindow):
             writeOutFiles(peaks,points,path,prefix)
 
             #Generate gnuplot files (on russian by defalut)
+            p = sys.argv[0]
+            dir_path = os.path.dirname(p)
             template_filename = "ru_gtemplate"
             plot_filename = os.path.join(path, prefix + "_plot.plt")
-            with open(template_filename,"r",encoding="koi8-r") as tpl_f, open(plot_filename,"w",encoding="koi8-r") as plot_f:
+            with open(os.path.join(dir_path, template_filename),"r",encoding="koi8-r") as tpl_f, open(plot_filename,"w",encoding="koi8-r") as plot_f:
                 for line in tpl_f:
                     tmp = line.replace("NAMESTRING",prefix)
                     tmp = tmp.replace("FF1STRING",prefix+"_points.dat")
